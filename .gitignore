@@ -1,0 +1,5 @@
+# Ignore checkpoint
+checkpoint/
+
+#Ignore output
+output/
