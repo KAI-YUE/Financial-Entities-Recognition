@@ -11,7 +11,7 @@ def main(**kwargs):
 #    Processor.transfer(config.bert_Data_Dir) 
     pass
 
-def train():
+def train(config):
     train_command = \
     r"""python BERT_NER.py
    --task_name=NER
@@ -35,11 +35,11 @@ def train():
     train_command = train_command.replace('\n', '')
     os.system(train_command)
 
-def test():
+def predict(config):
     test_command = \
     r"""python BERT_NER.py
    --task_name=NER
-   --do_predict=True
+   --do_predict=true
    --data_dir={}
    --bert_config_file={}
    --init_checkpoint={}
@@ -50,14 +50,16 @@ def test():
        config.output_dir,
        config.vocab_file,
        config.output_dir)
+    
+    test_command = test_command.replace('\n', '')
+    print(test_command)
+    os.system(test_command)
 
 if __name__ == "__main__":
     config_file = 'config.json'
     config = loadConfig(config_file)
         
+    processor = dataProcessor(config)
+    processor.split_data(config.bert_Data_Dir)
 
-
-    print(train_command)
-
-    # 
-     
+    # train(config)

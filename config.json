@@ -1,5 +1,5 @@
 {
-    "Train_Dir":            "./data/Train_tiny.csv",
+    "Train_Dir":            "./data/Train_Data.csv",
     "Test_Dir":             "./data/Test_Data.csv",
     "bert_Data_Dir":        "./data/",
     
@@ -8,8 +8,9 @@
     "init_checkpoint":      "./checkpoint/bert_model.ckpt",
     "vocab_file":           "./checkpoint/vocab.txt",
     "output_dir":           "./output",
-    "train_batch_size":     "4",
+    "train_batch_size":     "8",
     "num_train_epochs":     "3",
 
-    "num_dev":              "1"
+    "num_test":             "1000",
+    "num_dev":              "500"
 }

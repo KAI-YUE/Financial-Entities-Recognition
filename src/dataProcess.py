@@ -6,12 +6,12 @@ import random
 import pandas as pd
 import numpy as np
 
-
 class dataProcessor(object):
     def __init__(self, config):
         self.train_dir = config.Train_Dir
         self.test_dir = config.Test_Dir
-        self.num_dev = config.num_dev
+        self.num_dev = int(config.num_dev)
+        self.num_test = int(config.num_test)
         
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.INFO)
@@ -28,8 +28,36 @@ class dataProcessor(object):
             command = "self.{}".format(arg)
             exec(command + "={}".format(value))
     
-    
-    def transfer(self, output_dir):
+    def split_data(self, output_dir):
+        """
+        Split the train.csv data for Bert model, in case that the test data do not have labels.
+        """
+        train_df = pd.read_csv(self.train_dir, encoding='utf-8')
+        train_df = train_df.fillna("")
+
+        # Concatenate the title and text if they are different
+        for i in range(train_df.shape[0]):
+            if (train_df.iloc[i]['title'] != train_df.iloc[i]['text']):
+                train_df.iloc[i]['text'] = "".join((train_df.iloc[i]['title'], 
+                                        train_df.iloc[i]['text']))
+            else:
+                train_df.iloc[i]['text'] = train_df.iloc[i]['text']
+
+        train_df['title'] = train_df['text'].apply(self._word_filter)
+        
+        indices = np.arange(0, train_df.shape[0])
+        random.shuffle(indices)
+
+        with open(os.path.join(output_dir, "dev.txt"), 'w', encoding='utf-8') as fp:    
+            self._dump_data(train_df.iloc[indices[:self.num_dev]], fp)
+        
+        with open(os.path.join(output_dir, "test.txt"), 'w', encoding='utf-8') as fp:
+            self._dump_data(train_df.iloc[indices[self.num_dev: self.num_dev+self.num_test]], fp)
+
+        with open(os.path.join(output_dir, "train.txt"), 'w', encoding='utf-8') as fp:
+            self._dump_data(train_df.iloc[indices[self.num_dev+self.num_test:]], fp)
+
+    def transfer_origin(self, output_dir):
         """
         Transform the .csv data for Bert model
         """
@@ -67,7 +95,7 @@ class dataProcessor(object):
             self._dump_data(train_df.iloc[indices[-self.num_dev:]], fp)
         
         with open(os.path.join(output_dir, "test.txt"), 'w', encoding='utf-8') as fp:
-            self._dump_data(test_df, fp)
+            self._dump_data_without_label(test_df, fp)
                 
     
     ###################### Private Methods ############################
@@ -77,9 +105,20 @@ class dataProcessor(object):
             x = x.strip()
         except:
             return ''
-        x = re.sub('\?\?+|\{IMG:\d\}','',x)
+        x = re.sub('\?{2,}|\{IMG:.*\}','',x)
         return x
     
+    def _dump_data_without_label(self, dataFrame, fp):
+        for row in dataFrame.itertuples():
+            for c in row.text:
+                try:
+                    fp.write(c)
+                except Exception as e:
+                    self.logger.warning(e)
+                    continue
+
+        fp.write('\n')
+
     def _dump_data(self, dataFrame, fp):
         for row in dataFrame.itertuples():
         
@@ -97,7 +136,7 @@ class dataProcessor(object):
                     try:
                         fp.write('{0} {1}\n'.format(c1, 'O'))
                     except Exception as e:
-                        self.logger.info(e)
+                        self.logger.warning(e)
                         continue
                 
             fp.write('\n')
