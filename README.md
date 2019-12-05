@@ -1,6 +1,6 @@
 # DS2019互联网金融新实体发现
 
-环境：python3.5 + tensorflow1.10 + BERT
+![status](https://img.shields.io/badge/status-maintained-brightgreen.svg) ![Python](https://img.shields.io/badge/Python-3.5%2B-blue.svg) ![Tensorflow](https://img.shields.io/badge/Tensorflow-1.10--1.13-blue)
 
 ##### BERT模型介绍
 
