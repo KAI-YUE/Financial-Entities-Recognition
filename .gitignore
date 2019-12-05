@@ -3,3 +3,9 @@ checkpoint/
 
 #Ignore output
 output/
+
+#env
+.spyproject/
+.ipynb_checkpoints/
+.vscode
+venv/
