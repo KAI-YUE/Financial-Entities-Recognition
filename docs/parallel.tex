@@ -58,7 +58,7 @@ NER通常包括两部分：（1）实体边界识别；（2） 确定实体类�
 \section{数据集分析与处理}
 \subsection{数据集简介}
 实验处理的是互联网金融新实体数据来自BDCI官方提供的赛题数据，数据类型是中文自然语言处理文本，主要是自动爬取的金融网络文本，包括标题和内容，并进行了简单的标注和转换。数据规模上，训练集数据量和测试集数据量都是一万条文本数据。%
-训练数据全部以csv格式给出。其文件是一个字符序列。每条数据包括标识号（id）、文本标题（title）、文本内容（text）、未知实体列表（unknownEntities）。每条数据的内容如表\ref{data_description}所示。
+训练数据全部以csv格式给出。其文件是一个字符序列。每条数据包括标识号（id）、文本标题（title）、文本内容（text）、未知实体列表（unknownEntities）。每条数据的内容如表\ref{data_description} 所示。
 %
 \tabcolsep=12pt
 \begin{table}[!ht]
@@ -72,8 +72,8 @@ NER通常包括两部分：（1）实体边界识别；（2） 确定实体类�
         UnknownEntities & String & 未知实体列表 & 趣投美元 \\ 
         \bottomrule
     \end{tabular}
-    \label{data_description}
     \caption{数据格式说明}
+    \label{data_description}
 \end{table}
 
 \subsection{数据集缺陷}
@@ -172,7 +172,7 @@ BERT的输入表示（input representation）能够在一个token序列中明确
 源码里面没有我们需要的专门的NER识别的操纵代码。编写时也参考了网上教程的改写方法。\par
 
 在预训练的基础上，我们用处理后的数据集进行fine-tuning，训练100个epoch。代码已经上传到 \hyperref[code]{\texttt{\textcolor{blue}{Github}}} 存储库中，参数设置在json %
-配置文件中，模型则上传到 \hyperref[code]{\texttt{\textcolor{blue}{Dropbox}}} 上。 
+配置文件中，模型则上传到 \hyperref[code]{\texttt{\textcolor{blue}{OneDrive}}} 上。 
 
 \section{结果分析}
 \subsection{模型评估}
@@ -201,7 +201,7 @@ BERT的输入表示（input representation）能够在一个token序列中明确
 \end{table}
 
 可以看到，最终的得分结果从指标上来说不尽人意。即便是得分比较高的队伍，线上得分也只在$0.3$至$0.4$之间。我们%
-将一部分结果可视化，一作分析。结果如图\ref{results} 所示。\par
+将一部分结果可视化，以作分析。结果如图\ref{results} 所示。\par
 图\ref{r1} 展示了一个典型的相似实体误判的结果。“河南多家公司”与“河南高迈公司”比较相近，模型未能很好地作出区分。这导致了Precision指标的下降，%
 而要用后处理来处理这样的结果，仍面临一定的困难。\par
 图\ref{r2} 则是识别不精准的一个实例。与上一种情形相比，这种问题出现的频次相对少一些。在识别出的命名实体中，该例遗漏了“公司”两字，猜测可能是命名%
@@ -261,5 +261,20 @@ BERT的输入表示（input representation）能够在一个token序列中明确
 \section{附录}\label{code}
 Our code is available \href{https://github.com/KAI-YUE/Financial-Entities-Recognition}{here}.\par
 The model can be downloaded from \href{https://1drv.ms/u/s!AnzT-wEe9-ARgk4FviqmTab3qyCL?e=sSZOuU}{here}.\par
-(Note: You may have to bypass GFW to get access to Onedrive.)
+(Note: You may have to bypass GFW to get access to OneDrive.)
+
+\tabcolsep=20pt
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        姓名  &  学号 \\    \midrule
+        岳锴  &  PB16060757 \\
+        廖云铭 & PB16060687 \\
+        左琦  &  PB16061247 \\
+        丁可  &  PB16061050 \\  \bottomrule
+    \end{tabular}
+    \caption{团队成员}
+\end{table}
+
 \end{document}
