@@ -59,7 +59,8 @@ if __name__ == "__main__":
     config_file = 'config.json'
     config = loadConfig(config_file)
         
-    processor = dataProcessor(config)
-    processor.split_data(config.bert_Data_Dir)
+    # processor = dataProcessor(config)
+    # processor.split_data(config.bert_Data_Dir)
 
     # train(config)
+    predict(config)

@@ -6,10 +6,6 @@
 
 **BERT**全称**B**idirectional **E**ncoder **R**epresentations from **T**ransformers，是预训练语言表示的方法，可以在大型文本语料库（如维基百科）上训练通用的“语言理解”模型，然后将该模型用于下游NLP任务，比如机器翻译、问答等等。 
 
-报告中可以加多一些这方面的介绍。
-
-
-
 互联网金融新实体发现其实是一个典型的命名实体识别(NER)问题，属于下游NLP问题。直接使用BERT
 
 模型就可以得到一个初步的结果。首先我们需要下载BERT源码（从[BERT-TF](https://github.com/google-research/bert)下载bert源代码）。因为BERT模型是基于预训练模型进行微调的，我们自己是不可能完成模型的预训练的，我们需要直接下载使用Google提供的关于中文的bert预训练模型（从[BERT-Base Chinese](https://storage.googleapis.com/bert_models/2018_11_03/chinese_L-12_H-768_A-12.zip)下载模型，存放在checkpoint文件夹下）
@@ -101,7 +97,3 @@ class NerProcessor(DataProcessor):
 来进行测试，即对test.txt文件进行预测输出最终结果。
 
 比赛的数据都是比较原始的，再进行以上训练及测试操作时，需要对数据进行处理，得到能够进入程序运行的数据才行。
-
-处理原始数据的代码详见`dataprocess.ipynb`
-
-由于我们机器资源有限，比赛的数据跑不下来，并且我们只有简单的笔记本是由tensorflow_cpu跑程序，后来找了一些NER数据集来跑，依然无法胜任。所以我们没有一个完整的结果。实测程序没有问题，因为每次都是跑到了电脑卡死而被迫停止。
