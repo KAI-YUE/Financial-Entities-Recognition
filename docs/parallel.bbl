@@ -1,0 +1,13 @@
+\begin{thebibliography}{1}
+
+\bibitem{devlin2018bert}
+J.~Devlin, M.-W. Chang, K.~Lee, and K.~Toutanova, ``Bert: Pre-training of deep
+  bidirectional transformers for language understanding,'' {\em arXiv preprint
+  arXiv:1810.04805}, 2018.
+
+\bibitem{2019albert}
+L.~Zhenzhong, C.~Mingda, G.~Sebastian, G.~Kevin, S.~Piyush, and o.~Radu,
+  ``Albert: A lite bert for self-supervised learning of language
+  representations,'' {\em arXiv preprint arXiv:1810.04805}, 2019.
+
+\end{thebibliography}
